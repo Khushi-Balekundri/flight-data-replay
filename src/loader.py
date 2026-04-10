@@ -7,23 +7,26 @@ COLUMN_MAP = {
     "vertratecorr": "VerticalSpeed",
     "PTCH": "Pitch",
     "ROLL": "Roll",
-    "HDG": "Yaw",
+    "HDGS": "Yaw",
     "TAS": "Speed",
     "LATP": "Latitude",
     "LONP": "Longitude"
 }
 
 REQ_COLS = ['Time', 'Longitude', 'Latitude', 'Altitude',
-            'Roll (deg)', 'Pitch (deg)', 'Yaw (deg)']
+            'Roll', 'Pitch', 'Yaw']
 
 
 
 def load_csv(path):
     """The flight data is loaded with the required columns only"""
 
-    df = pd.read_csv(path, usecols=lambda col: col in COLUMN_MAP.keys() + [
-        "GMT_HOUR", "GMT_MINUTE", "GMT_SEC"
-    ])
+    df = pd.read_csv(
+        path,
+        usecols=lambda col: col in list(COLUMN_MAP.keys()) + [
+            "GMT_HOUR", "GMT_MINUTE", "GMT_SEC"
+        ]
+    )
 
     # --- Step 2: CREATE TIME (ADD HERE) ---
     df["Time"] = (
